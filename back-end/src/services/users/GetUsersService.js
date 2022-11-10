@@ -5,9 +5,14 @@ const getSellers = async () => {
   return sellers;
 };
 
+const getSellersId = async (id) => {
+  const sellers = await users.findOne({ where: { role: 'seller', id } });
+  return sellers;
+};
+
 const getAllUsers = async () => {
   const allUser = await users.findAll({ attributes: { exclude: ['password'] } });
   return allUser;
 };
 
-module.exports = { getSellers, getAllUsers };
+module.exports = { getSellers, getAllUsers, getSellersId };
