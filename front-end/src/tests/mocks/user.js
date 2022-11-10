@@ -1,9 +1,8 @@
 const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.'
-  + 'eyJpZCI6NCwibmFtZSI6IlRlc3QgdXNlciBtb2Nr'
-  + 'IiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZ'
-  + 'SI6ImN1c3RvbWVyIiwiaWF0IjoxNjY3NTIwMDY3LCJleHA'
-  + 'iOjE2Njc2MDY0Njd9.XJZZVi3A5JcVXH_2qXhq'
-  + 'JqXnqdDJLVmcaAmmb61aLWE';
++ 'eyJlbWFpbCI6ImFkbUBkZWxpdmVyeWFwcC5jb20iLCJwYXNzd29'
++ 'yZCI6Ii0tYWRtMkAyMSEhLS0iLCJyb2xlIjoiYWRtaW5pc3RyYXR'
++ 'vciIsImlhdCI6MTY2NzM0MTAxNCwiZXhwIjoxNjY3NDI3NDE0fQ.'
++ 'WNFKYQz1zrfZalSjRAai7WC6dJihTd8SytLuYL-G2r4';
 
 const userInfos = {
   token: TOKEN,

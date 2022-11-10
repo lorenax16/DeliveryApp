@@ -8,9 +8,7 @@ import mocks from './mocks';
 
 jest.mock('../services/api');
 
-const suaSenha = 'Digite sua senha';
-const seuEmail = 'Digite seu e-mail';
-const emailTeste = 'emailTeste';
+const emailTeste = 'email@teste.com';
 
 describe('Login Page', () => {
   afterEach(() => jest.restoreAllMocks());
@@ -22,10 +20,11 @@ describe('Login Page', () => {
 
     it('should have all elements rendered', () => {
       renderWithRouter(<App />, ['/login']);
-      const emailInput = screen.getByPlaceholderText('seuEmail');
-      const passwordInput = screen.getByPlaceholderText('suaSenha');
+      const emailInput = screen.getByRole('textbox', { name: /login/i });
+      const passwordInput = screen.getByLabelText(/senha/i);
       const loginButton = screen.getByRole('button', { name: /login/i });
-      const registerButton = screen.getByRole('button', { name: /Não tem uma conta?/i });
+      const registerButton = screen
+        .getByRole('button', { name: /ainda não tenho conta/i });
 
       expect(emailInput).toBeInTheDocument();
       expect(passwordInput).toBeInTheDocument();
@@ -35,8 +34,8 @@ describe('Login Page', () => {
 
     it('should not enable login button when email field value is invalid', async () => {
       renderWithRouter(<App />, ['/login']);
-      const emailInput = screen.getByPlaceholderText('seuEmail');
-      const passwordInput = screen.getByPlaceholderText('suaSenha');
+      const emailInput = screen.getByRole('textbox', { name: /login/i });
+      const passwordInput = screen.getByLabelText(/senha/i);
       const loginButton = screen.getByRole('button', { name: /login/i });
 
       userEvent.type(emailInput, 'test_test.com');
@@ -47,11 +46,11 @@ describe('Login Page', () => {
 
     it('should not enable login when password field value is invalid', async () => {
       renderWithRouter(<App />, ['/login']);
-      const emailInput = screen.getByPlaceholderText('seuEmail');
-      const passwordInput = screen.getByPlaceholderText('suaSenha');
+      const emailInput = screen.getByRole('textbox', { name: /login/i });
+      const passwordInput = screen.getByLabelText(/senha/i);
       const loginButton = screen.getByRole('button', { name: /login/i });
 
-      userEvent.type(emailInput, 'emailTeste');
+      userEvent.type(emailInput, emailTeste);
       userEvent.type(passwordInput, 'tes');
 
       expect(loginButton).toBeDisabled();
@@ -59,11 +58,11 @@ describe('Login Page', () => {
 
     it('should enable login when all fields values are valid', async () => {
       renderWithRouter(<App />, ['/login']);
-      const emailInput = screen.getByPlaceholderText('seuEmail');
-      const passwordInput = screen.getByPlaceholderText('suaSenha');
+      const emailInput = screen.getByRole('textbox', { name: /login/i });
+      const passwordInput = screen.getByLabelText(/senha/i);
       const loginButton = screen.getByRole('button', { name: /login/i });
-
-      userEvent.type(emailInput, 'emailTeste');
+      console.log(loginButton);
+      userEvent.type(emailInput, emailTeste);
       userEvent.type(passwordInput, 'test123456');
 
       expect(loginButton).not.toBeDisabled();
@@ -73,19 +72,21 @@ describe('Login Page', () => {
   describe('Test sign up', () => {
     it('should not disable register button', async () => {
       renderWithRouter(<App />, ['/login']);
-      const registerButton = screen.getByRole('button', { name: /Não tem uma conta?/i });
+      const registerButton = screen
+        .getByRole('button', { name: /Ainda não tenho conta?/i });
 
       expect(registerButton).not.toBeDisabled();
     });
 
     it('should redirect to products page after submit login forms', async () => {
       renderWithRouter(<App />, ['/login']);
-      const registerButton = screen.getByRole('button', { name: /Não tem uma conta?/i });
+      const registerButton = screen
+        .getByRole('button', { name: /Ainda não tenho conta?/i });
 
       userEvent.click(registerButton);
 
       await waitFor(
-        () => expect(screen.getByRole('heading', { name: /cadastro/i, level: 3 }))
+        () => expect(screen.getByRole('button', { name: /cadastrar/i }))
           .toBeInTheDocument(),
         { timeout: 10000 },
       );
@@ -99,16 +100,16 @@ describe('Login Page', () => {
         message: 'User not found',
         statusCode: 404,
       };
-      api.singIn.mockResolvedValue(errorResponse);
+      api.post.mockRejectedValue(errorResponse);
     });
 
     it('should show error message when login data is invalid', async () => {
       renderWithRouter(<App />, ['/login']);
-      const emailInput = screen.getByPlaceholderText('seuEmail');
-      const passwordInput = screen.getByPlaceholderText('suaSenha');
+      const emailInput = screen.getByRole('textbox', { name: /login/i });
+      const passwordInput = screen.getByLabelText(/senha/i);
       const loginButton = screen.getByRole('button', { name: /login/i });
 
-      userEvent.type(emailInput, 'emailTeste');
+      userEvent.type(emailInput, emailTeste);
       userEvent.type(passwordInput, 'test123456');
 
       expect(loginButton).not.toBeDisabled();
@@ -116,7 +117,8 @@ describe('Login Page', () => {
       userEvent.click(loginButton);
 
       await waitFor(
-        () => expect(screen.getByText('User not found')).toBeInTheDocument(),
+        () => expect(screen
+          .getByText('Não foi possível fazer o cadastro')).toBeInTheDocument(),
         { timeout: 10000 },
       );
     });
@@ -124,16 +126,16 @@ describe('Login Page', () => {
 
   describe('Test when login request submission was successful', () => {
     beforeEach(() => {
-      api.singIn.mockResolvedValue(mocks.userMock.userInfos);
+      api.post.mockResolvedValue({ data: mocks.userMock.userInfos });
     });
 
     it('should redirect to products page after submit login forms', async () => {
       renderWithRouter(<App />, ['/login']);
-      const emailInput = screen.getByPlaceholderText('seuEmail');
-      const passwordInput = screen.getByPlaceholderText('suaSenha');
+      const emailInput = screen.getByRole('textbox', { name: /login/i });
+      const passwordInput = screen.getByLabelText(/senha/i);
       const loginButton = screen.getByRole('button', { name: /login/i });
 
-      userEvent.type(emailInput, 'emailTeste');
+      userEvent.type(emailInput, emailTeste);
       userEvent.type(passwordInput, 'test123456');
 
       expect(loginButton).not.toBeDisabled();
@@ -141,7 +143,7 @@ describe('Login Page', () => {
       userEvent.click(loginButton);
 
       await waitFor(
-        () => expect(screen.getByText(mocks.userMock.userInfos.name)).toBeInTheDocument(),
+        () => expect(screen.getByText('Sair')).toBeInTheDocument(),
         { timeout: 10000 },
       );
     });
