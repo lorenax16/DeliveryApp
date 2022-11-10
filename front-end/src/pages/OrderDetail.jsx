@@ -17,11 +17,11 @@ function OrderDetail() {
 
   useEffect(() => {
     const getOrderDetails = async () => {
-      const { info, products, nomePessoaVendedora } = await orderDetails(id);
+      const { info, product, nomePessoaVendedora } = await orderDetails(id);
       console.log(info);
       setPessoaVendedora(nomePessoaVendedora);
       setData(info);
-      setProductsData(products);
+      setProductsData(product);
     };
     getOrderDetails();
   }, [id]);
