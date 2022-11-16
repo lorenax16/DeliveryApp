@@ -15,7 +15,7 @@ const createSale = async (sale, token) => {
     status: 'Pendente',
   };
   const { dataValues }  = await model.sales.create(newSale);
-  console.log(dataValues);
+   // console.log(dataValues);
   products.map(async (product) => {
     await model.salesProducts.create({
       saleId: dataValues.id, productId: product.id, quantity: product.quantity,

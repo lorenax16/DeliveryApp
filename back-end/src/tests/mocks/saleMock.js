@@ -16,6 +16,22 @@ const salesMock = {
 	] 
 };
 
+const saleVendedor = {
+info:{
+vendedor: 1,
+endereço: 'rua do teste do backend',
+numero: 228, 
+},
+products: [ {
+  "productId": 2,
+  "quantity": 3
+},
+{
+  "productId": 3,
+  "quantity": 7
+}],
+total: 228.50
+}
 
 const salesReturnMock = {
   dataValues: {
@@ -23,7 +39,7 @@ const salesReturnMock = {
     userId: 2,
 	  sellerId: 1,
 	  "totalPrice": 97.25,
-	  "deliveryAddress": "Rua do Teste",
+	  "deliveryAddress": "Rua do Teste Backend",
 	  "deliveryNumber": "198",
 	  "productsList": [
 		  {
@@ -31,20 +47,20 @@ const salesReturnMock = {
 			  "quantity": 3
 		  },
 		  {
-			  "productId": 3,
+			  "productId": 8,
 			  "quantity": 7
 		  }
 	  ],
   },
 };
 
-const salesProductWithId1 = {
+const salesProductId1 = {
   "saleId": 1,
 	"productId": 2,
 	"quantity": 3
 };
 
-const salesProductWithId2 = {
+const salesProductId2 = {
   "saleId": 2,
   "productId": 2,
 	"quantity": 7
@@ -53,6 +69,7 @@ const salesProductWithId2 = {
 module.exports = {
   salesMock,
   salesReturnMock,
-  salesProductWithId1,
-  salesProductWithId2,
+  salesProductId1,
+  salesProductId2,
+  saleVendedor,
 }

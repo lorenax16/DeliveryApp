@@ -4,36 +4,34 @@ const sinon = require('sinon');
 
 const { sales, salesProducts } = require('../../database/models');
 const salesService = require('../../services/sales/SalesService');
-const { salesMock, salesProductWithId1, salesProductWithId2, salesReturnMock } = require('../mocks/saleMock');
+const {userTokenMock} = require('../mocks/userMocks');
+const { salesProductId1, salesProductId2, salesReturnMock, saleVendedor } = require('../mocks/saleMock');
+const { verifyToken } = require('../../helpers/Token');
+const  jwt = require('jsonwebtoken');
 
 
 describe('Sales Service', () => {
   describe('With an attempt to create a sale ', () => {
     describe('with success', () => {
       before(() => {
-        sinon.stub(sales, 'createSale').resolves(salesReturnMock);
-        sinon.stub(salesProducts, 'createSale')
-          .onCall(0).resolves(salesProductWithId1)
-          .onCall(1).resolves(salesProductWithId2);
+        sinon.stub(sales, 'create').resolves(salesReturnMock);
+        sinon.stub(salesProducts, 'create')
+          .onCall(0).resolves(salesProductId1)
+          .onCall(1).resolves(salesProductId2);
+        sinon.stub(jwt, 'verify').returns({});
       });
       after(() => {
         sinon.restore();
       });
 
       it('Should return an object with a key "status" and "json"', async () => {
-        const newUser = await salesService.createSale(salesMock);
+        const newUser = await salesService.createSale(saleVendedor, userTokenMock);
 
         expect(newUser).to.be.an('object');
-        expect(newUser).to.have.all.keys('status', 'json');
+        expect(newUser).to.have.all.keys('deliveryAddress','deliveryNumber','id','productsList','sellerId','totalPrice', 'userId');
       });
 
-      it('Should return an object with status 201 and json with a message "OK"', async () => {
-        const newUser = await salesService.createSale(salesMock);
-
-
-        expect(newUser.status).to.be.eq(201);
-        expect(newUser.json).to.be.deep.eq({ message: 'OK' });
-      });
+  
     });
    })
 });
