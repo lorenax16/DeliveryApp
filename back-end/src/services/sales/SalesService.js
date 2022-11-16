@@ -14,7 +14,7 @@ const createSale = async (sale, token) => {
     saleDate: new Date(),
     status: 'Pendente',
   };
-  const { dataValues }  = await model.sales.create(newSale);
+  const { dataValues } = await model.sales.create(newSale);
    // console.log(dataValues);
   products.map(async (product) => {
     await model.salesProducts.create({
@@ -43,6 +43,5 @@ const getBySeller = async (id) => {
   });
   return listedSales;
 };
-
 
 module.exports = { createSale, getByCustomer, getBySeller };
