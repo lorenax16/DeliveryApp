@@ -1,26 +1,51 @@
 const userMock = {
   id: 1,
-  email: 'ze_delivery@email.com',
-  name: 'Ze Delivery',
-  password: '71e227587b8a3ff3da9eb524e18185af', // password: deliveryPassword
-  role: 'customer',
-};
-const userLoginMock = {
-  email: 'ze_delivery@email.com',
-  password: '71e227587b8a3ff3da9eb524e18185af', // password: deliveryPassword
+  name: "Delivery App Admin",
+  email: "adm@deliveryapp.com",
+  password: "a4c86edecc5aee06eff8fdeda69e0d04", //senha: md5('--adm2@21!!--')
+  role: "administrator",
 };
 
-const sellerMock = {
-  id: 2,
-  name: 'Fulana Pereira',
-  email: 'fulana@deliveryapp.com',
-  password: '3c28d2b0881bf46457a853e0b07531c6',
-  role: 'seller',
-  // -- senha: md5('fulana@123')
+const userTokenMock =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYmF0YXRpbmhhQGhvdG1haWwuY29tIiwiaWF0IjoxNjY3MjUyNDA2LCJleHAiOjE2Njc4NTcyMDZ9.ID3JdzGwqmin7j9m-5n_yP-MYmkbU96BE0-Ic-PHIBo";
+
+const userLoginMock = {
+  email: "adm@deliveryapp.com",
+  password: "--adm2@21!!--",
+};
+
+const badUserLogin = {
+  email: "adm@deliveryapp.com",
+  password: "--adm2@21!!-",
+};
+
+const nonRegisteredUser = {
+  email: "failure@deliveryapp.com",
+  password: "passwordfail",
+};
+
+const createUserMockReturn = {
+  dataValues: {
+    id: 2,
+    name: "Aluno Trybe",
+    email: "aluno@hotmail.com",
+    password: "f9104c649c25423a30e2968573899f48", 
+    role: "customer",
+  },
+};
+
+const createUserMock = {
+  name: "Aluno Trybe",
+  email: "aluno@hotmail.com",
+  password: "f9104c649c25423a30e2968573899f48",
 };
 
 module.exports = {
-  userMock,
   userLoginMock,
-  sellerMock,
+  userMock,
+  userTokenMock,
+  badUserLogin,
+  nonRegisteredUser,
+  createUserMockReturn,
+  createUserMock,
 };

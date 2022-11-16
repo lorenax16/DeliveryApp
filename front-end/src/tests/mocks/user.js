@@ -6,8 +6,8 @@ const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.'
 
 const userInfos = {
   token: TOKEN,
-  role: 'costumer',
-  name: 'Test user mock',
+  role: 'customer',
+  name: 'Jhon user mock',
   email: 'test@test.com',
   id: 1,
 };

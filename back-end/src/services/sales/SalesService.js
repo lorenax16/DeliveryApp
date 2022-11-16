@@ -1,4 +1,5 @@
-const { sales, salesProducts } = require('../../database/models');
+// const { sales, salesProducts } = require('../../database/models');
+const model = require('../../database/models');
 const { verifyToken } = require('../../helpers/Token');
 
 const createSale = async (sale, token) => {
@@ -13,9 +14,10 @@ const createSale = async (sale, token) => {
     saleDate: new Date(),
     status: 'Pendente',
   };
-  const { dataValues } = await sales.create(newSale);
+  const { dataValues }  = await model.sales.create(newSale);
+  console.log(dataValues);
   products.map(async (product) => {
-    await salesProducts.create({
+    await model.salesProducts.create({
       saleId: dataValues.id, productId: product.id, quantity: product.quantity,
     });
   });
@@ -23,7 +25,7 @@ const createSale = async (sale, token) => {
 };
 
 const getByCustomer = async (id) => {
-  const listedSales = await sales.findAll({
+  const listedSales = await model.sales.findAll({
     where: { userId: id },
     attributes: {
       exclude: [
@@ -36,10 +38,11 @@ const getByCustomer = async (id) => {
 };
 
 const getBySeller = async (id) => {
-  const listedSales = await sales.findAll({
+  const listedSales = await model.sales.findAll({
     where: { sellerId: id },
   });
   return listedSales;
 };
+
 
 module.exports = { createSale, getByCustomer, getBySeller };
