@@ -98,7 +98,7 @@ function SignIn() {
           <span
             data-testid="common_login__element-invalid-email"
           >
-            Nõa foi possível fazer o cadastro
+            Não foi possível fazer o cadastro
           </span>
         )
       }
