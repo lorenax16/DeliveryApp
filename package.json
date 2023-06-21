@@ -55,5 +55,8 @@
       "__TESTDESC__": true,
       "__TESTFILE__": true
     }
+  },
+  "dependencies": {
+    "styled-components": "^5.3.6"
   }
 }
